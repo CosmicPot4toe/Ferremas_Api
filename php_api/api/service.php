@@ -5,13 +5,14 @@
 
 	include_once '../config/Database.php';
 	include_once '../models/Student.php';
+	include_once '../models/Producto.php';
 
-	
+
 
 	$db = new Database();
 	$db = $db->connect();
 
-	// dynamic model| now only thing is differentiating the params of each
+	// dynamic modelS
 	$model = $_GET['model'];
 	switch ($model) {
 		case 'Student':
