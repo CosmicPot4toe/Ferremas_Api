@@ -1,5 +1,6 @@
 <?php
 
+include_once '../config/Database.php';
 class Student {
 
     private $conn;
@@ -9,7 +10,7 @@ class Student {
     public $address;
     public $age;
 
-    public function __construct($db){
+    public function __construct(Database $db){
         $this->conn = $db;
     }
 		public function __toString() {

@@ -1,4 +1,6 @@
 <?php
+
+include_once '../config/Database.php';
 class Producto {
 
 	private $conn;
@@ -8,7 +10,7 @@ class Producto {
 	public $address;
 	public $age;
 
-	public function __construct($db){
+	public function __construct(Database $db){
 			$this->conn = $db;
 	}
 	public function __toString() {
@@ -27,7 +29,7 @@ class Producto {
 
 			$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
 			$stmt->bindParam(1, $this->id);
-			$stmt->execute();        
+			$stmt->execute();
 
 			if($stmt->rowCount() > 0) {
 					

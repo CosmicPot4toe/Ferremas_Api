@@ -10,7 +10,7 @@
 
 
 	$db = new Database();
-	$db = $db->connect();
+	// $db = $db->connect();
 
 	// dynamic modelS
 	$model = $_GET['model'];
