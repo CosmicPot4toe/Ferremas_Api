@@ -9,17 +9,17 @@
 
 
 
-	// $db = new Database();
+	$db = new Database();
 	// $db = $db->connect();
 	// dynamic modelS
 	$model = $_GET['model'];
 	switch ($model) {
 		case 'Student':
-			$model = new Student();
+			$model = new Student($db);
 			break;
-		// case 'Producto':
-		// 	$model = new Producto($db);
-		// 	break;
+		case 'Producto':
+			$model = new Producto($db);
+			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));
 			exit;

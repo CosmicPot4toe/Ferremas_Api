@@ -9,15 +9,20 @@ class Student {
 	public $address;
 	public $age;
 
-	public function __construct(){
-			$this->conn = new Database();
+	public function __construct($db){
+			$this->conn = $db;
+			var_dump($this->conn);
 	}
 	public function __toString() {
 		return "Student";
 	}
 	public function fetchAll() {
-		$q = 'SELECT * FROM students;';
-		$stmt = $this->conn->query($q);;
+		$stmt = $this->conn->prepare('SELECT * FROM students');
+		if ($stmt==false){
+			echo "prepared statement failed";
+			die;
+		}
+		#$stmt->execute();
 		return $stmt;
 	}
 
