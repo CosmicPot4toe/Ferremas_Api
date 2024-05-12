@@ -7,7 +7,12 @@ class Database extends SQLite3 {
     // private $pwd = "root";
     // private $conn = NULL;
 	function __construct(){
-		$this->open("../../db.slite3");
+		try {
+			$this->open("../db/db.slite3");
+		} catch (\Throwable $th) {
+			//throw $th;
+			echo $th;
+		}
 	}
     // public function connect() {
     //     try{

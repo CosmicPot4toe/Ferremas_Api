@@ -11,3 +11,6 @@ La mismisima que nos dio el profe la segunda clase de API solo que esta tiene 2 
 - en caso de migrar a sqlite3 el archivo completo debera cambiar ya que la conexion entre php y sqlite3 es diferente a mysql, esto porque no necesitamos un servidor
 ---
 Esto es todo lo que tenia que decir, es mas facil escribirlo que hablarlo - pero si me piden escribir minimo 3 lineas en una prueba no puedo, honestly can some1 explain that to me? 
+
+## Notas generales
+- resulta q sqlite no puede modificar una columna lo que resulta en un problema para nosotrs q estamos tratando de insertar cosas y luego hacer la tabla AUTO_INCREMENT, algo q normalmente es posible, aca no, **PERO** tienen algo parecido llamado ROWID que hace practicamente lo mismo

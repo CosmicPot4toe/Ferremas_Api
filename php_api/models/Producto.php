@@ -29,9 +29,9 @@ class Producto {
 
 			$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
 			$stmt->bindParam(1, $this->id);
-			$stmt->execute();
+			$stmt = $stmt->execute();
 
-			if($stmt->rowCount() > 0) {
+			if($stmt->numColumns() && $stmt->columnType(0) != SQLITE3_NULL) {
 					
 					$row = $stmt->fetch(PDO::FETCH_ASSOC);
 

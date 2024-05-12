@@ -7,9 +7,9 @@
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.3.19
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- START TRANSACTION;
+-- SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -25,24 +25,29 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `students`
---
+--/* UNSIGNED CHARACTER SET utf8 CHARACTER SET utf8 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4*/
+DROP TABLE students;
 
-CREATE TABLE `students` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `age` int(11) NOT NULL,
-  `address` varchar(100) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE students(
+  id INTEGER PRIMARY KEY NOT NULL,
+  name varchar(100)  NOT NULL,
+  age int(11) NOT NULL,
+  address varchar(100)  NOT NULL
+);
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `name`, `age`, `address`) VALUES
+INSERT INTO students(id, name, age, address) VALUES
 (15, 'David', 23, 'Bangalore'),
 (16, 'Joel', 23, 'Delhi'),
 (17, 'Thomas', 23, 'Kolkata');
 
+INSERT INTO students(name, age, address) VALUES
+('pedro', 23, 'Pe'),
+('Macarena', 23, 'Kolkata');
 --
 -- Indexes for dumped tables
 --
@@ -50,8 +55,9 @@ INSERT INTO `students` (`id`, `name`, `age`, `address`) VALUES
 --
 -- Indexes for table `students`
 --
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`id`);
+
+-- ALTER TABLE `students`
+--   ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -59,10 +65,9 @@ ALTER TABLE `students`
 
 --
 -- AUTO_INCREMENT for table `students`
---
-ALTER TABLE `students`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-COMMIT;
+--UNSIGNED MODIFY
+-- ALTER TABLE students.id AUTO_INCREMENT=18 ;
+-- COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
