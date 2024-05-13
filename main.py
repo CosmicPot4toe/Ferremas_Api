@@ -32,5 +32,6 @@ class PhpApi:
 
 
 url = 'http://localhost/php_api/api/service.php?'
-api = PhpApi("Producto",url).getOne(17)
-print(api)
+api = PhpApi("Producto",url)
+print(api.getOne(17))
+print(api.getAll())
