@@ -17,16 +17,20 @@ class Student {
 	public function fetchAll() {
 		$stmt = $this->conn->prepare('SELECT * FROM students');
 		$stmt->execute();
-		return $stmt;
+		$rowCount = $this->conn->query('SELECT COUNT(*) FROM students')->fetchColumn();
+		#var_dump($stmt);
+		return [$stmt,$rowCount];
 	}
 
 	public function fetchOne() {
+		$sql="SELECT COUNT(*) FROM students WHERE id = $this->id";
+		$rowCount = $this->conn->query($sql)->fetchColumn();
 
 		$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
 		$stmt->bindParam(1, $this->id);
 		$stmt->execute();        
 
-		if($stmt->RowCount()>0) {
+		if($rowCount>0) {
 			
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -35,27 +39,23 @@ class Student {
 			$this->address = $row['address'];
 			$this->age = $row['age'];
 
-			$this->conn->close();
 			return TRUE;
 
 		}
-		$this->conn->close();
 		return FALSE;
 	}
 
 	public function postData() {
 
-		$stmt = $this->conn->prepare('INSERT INTO students SET name = :name, address = :address, age = :age');
+		$stmt = $this->conn->prepare('INSERT INTO students(name,age,address) VALUES (:name, :age, :address)');
 
 		$stmt->bindParam(':name', $this->name);
 		$stmt->bindParam(':address', $this->address);
 		$stmt->bindParam(':age', $this->age);
 
 		if($stmt->execute()) {
-			$this->conn->close();
 			return TRUE;
 		}
-		$this->conn->close();
 		return FALSE;
 	}
 
@@ -69,10 +69,8 @@ class Student {
 		$stmt->bindParam(':id', $this->id);
 
 		if($stmt->execute()) {
-			$this->conn->close();
 			return TRUE;
 		}
-		$this->conn->close();
 		return FALSE;
 	}
 
@@ -82,10 +80,8 @@ class Student {
 		$stmt->bindParam(':id', $this->id);
 
 		if($stmt->execute()) {
-			$this->conn->close();
 			return TRUE;
 		}
-		$this->conn->close();
 		return FALSE;
 	}
 

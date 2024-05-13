@@ -52,7 +52,7 @@ class Producto {
 
 	public function postData() {
 
-			$stmt = $this->conn->prepare('INSERT INTO students SET name = :name, address = :address, age = :age');
+			$stmt = $this->conn->prepare('INSERT INTO students(name,age,address) VALUES (:name, :age, :address)');
 
 			$stmt->bindParam(':name', $this->name);
 			$stmt->bindParam(':address', $this->address);
