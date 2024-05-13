@@ -1,9 +1,8 @@
 <?php
 
-include_once '../config/Database.php';
 class Student {
 
-	private Database $conn;
+	private $conn;
 	public $id;
 	public $name;
 	public $address;
@@ -11,18 +10,13 @@ class Student {
 
 	public function __construct($db){
 			$this->conn = $db;
-			var_dump($this->conn);
 	}
 	public function __toString() {
 		return "Student";
 	}
 	public function fetchAll() {
 		$stmt = $this->conn->prepare('SELECT * FROM students');
-		if ($stmt==false){
-			echo "prepared statement failed";
-			die;
-		}
-		#$stmt->execute();
+		$stmt->execute();
 		return $stmt;
 	}
 
@@ -30,9 +24,9 @@ class Student {
 
 		$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
 		$stmt->bindParam(1, $this->id);
-		$stmt = $stmt->execute();        
+		$stmt->execute();        
 
-		if($stmt->numColumns() && $stmt->columnType(0) != SQLITE3_NULL) {
+		if($stmt->RowCount()>0) {
 			
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 

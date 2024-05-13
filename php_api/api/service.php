@@ -10,7 +10,7 @@
 
 
 	$db = new Database();
-	// $db = $db->connect();
+	$db = $db->connect();
 	// dynamic modelS
 	$model = $_GET['model'];
 	switch ($model) {
@@ -75,7 +75,7 @@
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 			try {
 				$res = $model->fetchAll();
-				$resCount = $res->num_rows;
+				#$resCount = Count($res);
 				$models_ = array();
 				$data = json_decode(file_get_contents("php://input"));
 				if(isset($data->id)) {
@@ -88,9 +88,9 @@
 					} else {
 						echo json_encode(array('message' => "No records found!"));
 					}
-				} elseif($resCount > 0) {
+				} elseif($res[1] > 0) {
 					$models = array();
-					while($row = $res->fetch()) {
+					while($row = $res[0]->fetch(PDO::FETCH_ASSOC)) {
 						foreach($row as $k => $v){
 							$models_[$k]=$v;
 						}

@@ -10,7 +10,7 @@ class Producto {
 	public $address;
 	public $age;
 
-	public function __construct(Database $db){
+	public function __construct(PDO $db){
 			$this->conn = $db;
 	}
 	public function __toString() {
@@ -19,19 +19,22 @@ class Producto {
 
 
 	public function fetchAll() {
-			
 			$stmt = $this->conn->prepare('SELECT * FROM students');
 			$stmt->execute();
-			return $stmt;
+			$rowCount = $this->conn->query('SELECT COUNT(*) FROM students')->fetchColumn();
+			#var_dump($stmt);
+			return [$stmt,$rowCount];
 	}
 
 	public function fetchOne() {
+			$sql="SELECT COUNT(*) FROM students WHERE id = $this->id";
+			$rowCount = $this->conn->query($sql)->fetchColumn();
 
 			$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
 			$stmt->bindParam(1, $this->id);
-			$stmt = $stmt->execute();
+			$stmt->execute();
 
-			if($stmt->numColumns() && $stmt->columnType(0) != SQLITE3_NULL) {
+			if($rowCount >0) {
 					
 					$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -89,6 +92,4 @@ class Producto {
 
 			return FALSE;
 	}
-
-
 }

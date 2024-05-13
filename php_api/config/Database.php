@@ -1,13 +1,18 @@
 <?php
 
-class Database extends SQLite3 {
+class Database{
     // private $host = "localhost";
     // private $user = "root";
     // private $db = "yep";
     // private $pwd = "root";
-    // private $conn = NULL;
-	function __construct(){
-		$this->open("db.sqlite3");
+    private $conn = NULL;
+	function connect(){
+		try {
+			$this->conn = new PDO("sqlite:../db/db.sqlite3");
+		} catch (PDOException $th) {
+			echo "Connection Error: " . $th->getMessage();
+		}
+		return $this->conn;
 	}
     // public function connect() {
     //     try{
