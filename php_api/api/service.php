@@ -6,8 +6,7 @@
 	include_once '../config/Database.php';
 	include_once '../models/Producto.php';
 	include_once '../models/Tienda.php';
-
-
+	include_once '../models/Categoria.php';
 
 	$db = new Database();
 	$db = $db->connect();
@@ -19,6 +18,9 @@
 			break;
 		case 'Tienda':
 			$model = new Tienda($db,'tiendas');
+			break;
+		case 'Categoria':
+			$model = new Categoria($db,'categorias',"id_C");
 			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));

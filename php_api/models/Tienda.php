@@ -46,7 +46,6 @@ class Tienda extends BaseModel{
 	public function putData(string $sql=null) {
 		#:dir, :comuna, :region, :email, :cel
 		$sql = "UPDATE $this->table SET nombre = :nombre, direccion = :dir, comuna= :comuna, region = :region, email =:email, telefono = :cel WHERE $this->id_name = :id";
-
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bindParam(':nombre', $this->nombre);
 		$stmt->bindParam(':dir', $this->dir);

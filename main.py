@@ -80,5 +80,5 @@ class PhpApi:
 
 
 url = 'http://localhost/php_api/api/service.php?'
-api = PhpApi("Tienda",url)
+api = PhpApi("Categoria",url)
 print(api.getOne(1))
