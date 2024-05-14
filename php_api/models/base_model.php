@@ -11,7 +11,9 @@ class BaseModel{
 		$this->table = $table;
 		$this->id_name = $id_name;
 	}
-
+	public function IdName(){
+		return $this->id_name;
+	}
 	public function __toString() {
 		return $this->table;
 	}
@@ -44,7 +46,7 @@ class BaseModel{
 		$sql="DELETE FROM $this->table WHERE $this->id_name = $this->id";
 		$stmt = $this->conn->prepare($sql);
 		if($stmt->execute()) {
-				return TRUE;
+			return TRUE;
 		}
 		return FALSE;
 	}

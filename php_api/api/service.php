@@ -29,29 +29,29 @@
 	
 	try {
 		if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-			$data = json_decode(file_get_contents("php://input"));
-			$model->id = isset($data->id) ? $data->id : NULL;
+			$data =(array) json_decode(file_get_contents("php://input"));
+			$model->id = isset($data[$model->IdName()]) ? $data[$model->IdName()] : NULL;
 			if(! is_null($model->id)) {
 				if($model->delete()) {
-				echo json_encode(array('message' => 'Student deleted'));
+				echo json_encode(array('message' => "$model deleted"));
 				} else {
-				echo json_encode(array('message' => 'Student Not deleted, try again!'));
+				echo json_encode(array('message' => "$model Not deleted, try again!"));
 				}
 			} else {
-			echo json_encode(array('message' => "Error: Student ID is missing!"));
+			echo json_encode(array('message' => "Error: $model ID is missing!"));
 			}
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data =(array) json_decode(file_get_contents("php://input"));
 			foreach(get_object_vars($model) as $k=>$v){
-				if ($k!="id"){
+				if ($k!=$model->$id_name){
 					$model->$k = $data[$k];
 				}
 			}
 			if($model->postData()) {
-				echo json_encode(array('message' => 'Student added'));
+				echo json_encode(array('message' => "$model added"));
 			} else {
-				echo json_encode(array('message' => 'Student Not added, try again!'));
+				echo json_encode(array('message' => "$model Not added, try again!"));
 			}
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -62,12 +62,12 @@
 				}
 				if(! is_null($model->id)) {
 					if($model->putData()) {
-					echo json_encode(array('message' => 'Student updated'));
+					echo json_encode(array('message' => "$model updated"));
 					} else {
-					echo json_encode(array('message' => 'Student Not updated, try again!'));
+					echo json_encode(array('message' => "$model Not updated, try again!"));
 					}
 				} else {
-				echo json_encode(array('message' => "Error: Student ID is missing!"));
+				echo json_encode(array('message' => "Error: $model ID is missing!"));
 				}
 			} catch (\Throwable $th) {
 				echo $th;
@@ -77,9 +77,9 @@
 			try {
 				$res = $model->fetchAll();
 				$models_ = array();
-				$data = json_decode(file_get_contents("php://input"));
-				if(isset($data->id)) {
-					$model->id = $data->id;
+				$data =(array) json_decode(file_get_contents("php://input"));
+				if(isset($data[$model->IdName()])) {
+					$model->id = $data[$model->IdName()];
 					if($model->fetchOne()) {
 						foreach ($model as $k => $v) {
 							$models_[$k]=$v;
