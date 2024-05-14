@@ -4,7 +4,7 @@ DROP TABLE productos;
 DROP TABLE categorias;
 
 CREATE TABLE categorias(
-  id_Category INTEGER PRIMARY KEY NOT NULL,
+  id_C INTEGER PRIMARY KEY NOT NULL,
   nombre varchar(100) NOT NULL,
   sub_categoria varchar(100) NOT NULL,
   sub_tipo_prod varchar(100) NOT NULL
@@ -18,8 +18,8 @@ CREATE TABLE productos(
 	descripcion varchar(445) NOT NULL,
   precio int(7) NOT NULL,
   stock int(7) NOT NULL,
-	id_Category INTEGER,
-	FOREIGN KEY (id_Category) REFERENCES categorias (id_Category)  
+	id_C INTEGER,
+	FOREIGN KEY (id_C) REFERENCES categorias(id_C)  
 );
 
 --
@@ -28,6 +28,6 @@ CREATE TABLE productos(
 INSERT INTO categorias(nombre, sub_categoria, sub_tipo_prod) VALUES
 ('Taladros','Percutor','Inalambrico');
 
-INSERT INTO productos(nombre, marca, codigo_producto,descripcion,precio,stock,id_Category) VALUES
+INSERT INTO productos(nombre, marca, codigo_producto,descripcion,precio,stock,id_C) VALUES
 ('Taladro','Razen?', 00001, 'lorem Ipsum yadayada pedro me la come',30000,30,1),
 ('Taladro','smthsmt', 00002, 'lorem Ipsum yadayada pedro me la come',25000,10,1);

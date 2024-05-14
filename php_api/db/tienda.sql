@@ -1,7 +1,7 @@
 DROP TABLE tiendas;
 
 CREATE TABLE tiendas(
-  id_tienda INTEGER PRIMARY KEY NOT NULL,
+  id INTEGER PRIMARY KEY NOT NULL,
   nombre varchar(100) NOT NULL,
   direccion varchar(100) NOT NULL,
   comuna varchar(100) NOT NULL,

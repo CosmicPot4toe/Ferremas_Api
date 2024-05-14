@@ -5,6 +5,7 @@
 
 	include_once '../config/Database.php';
 	include_once '../models/Producto.php';
+	include_once '../models/Tienda.php';
 
 
 
@@ -15,6 +16,9 @@
 	switch ($model) {
 		case 'Producto':
 			$model = new Producto($db,'productos');
+			break;
+		case 'Tienda':
+			$model = new Tienda($db,'tiendas');
 			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));

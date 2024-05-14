@@ -11,10 +11,6 @@ class Producto extends BaseModel{
 	public $precio;
 	public $stock;
 	public $id_Cat;
-	
-	public function __toString() {
-		return "Producto";
-	}
 
 	public function fetchOne() {
 		#get common stmt
