@@ -1,95 +1,72 @@
 <?php
 
-include_once '../config/Database.php';
-class Producto {
+include_once '../models/base_model.php';
 
-	private $conn;
+class Producto extends BaseModel{
+	#nombre, marca, codigo_producto,descripcion,precio,stock,id_Category
+	public $nombre;
+	public $marca;
+	public $cod_prod;
+	public $desc;
+	public $precio;
+	public $stock;
+	public $id_Cat;
 	
-	public $id;
-	public $name;
-	public $address;
-	public $age;
-
-	public function __construct(PDO $db){
-			$this->conn = $db;
-	}
 	public function __toString() {
 		return "Producto";
 	}
 
-
-	public function fetchAll() {
-			$stmt = $this->conn->prepare('SELECT * FROM students');
-			$stmt->execute();
-			$rowCount = $this->conn->query('SELECT COUNT(*) FROM students')->fetchColumn();
-			#var_dump($stmt);
-			return [$stmt,$rowCount];
-	}
-
 	public function fetchOne() {
-			$sql="SELECT COUNT(*) FROM students WHERE id = $this->id";
-			$rowCount = $this->conn->query($sql)->fetchColumn();
-
-			$stmt = $this->conn->prepare('SELECT  * FROM students WHERE id = ?');
-			$stmt->bindParam(1, $this->id);
-			$stmt->execute();
-
-			if($rowCount >0) {
-					
-					$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-					$this->id = $row['id'];
-					$this->name = $row['name'];
-					$this->address = $row['address'];
-					$this->age = $row['age'];
-
-					return TRUE;
-
-			}
-			
-			return FALSE;
+		#get common stmt
+		$res = parent::fetchOne();
+		#handle Result of stmt
+		if($res[1] >0) {
+			$row = $res[0]->fetch(PDO::FETCH_ASSOC);
+			$this->id = $row['id'];
+			$this->nombre = $row['nombre'];
+			$this->marca = $row['marca'];
+			$this->cod_prod = $row['codigo_producto'];
+			$this->desc = $row['descripcion'];
+			$this->precio = $row['precio'];
+			$this->stock = $row['stock'];
+			$this->id_Cat = $row['id_Category'];
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	public function postData() {
-
-			$stmt = $this->conn->prepare('INSERT INTO students(name,age,address) VALUES (:name, :age, :address)');
-
-			$stmt->bindParam(':name', $this->name);
-			$stmt->bindParam(':address', $this->address);
-			$stmt->bindParam(':age', $this->age);
-
-			if($stmt->execute()) {
-					return TRUE;
-			}
-
-			return FALSE;
+		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,stock,id_Category) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :stock, :id_Cat)";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':nombre', $this->nombre);
+		$stmt->bindParam(':marca', $this->marca);
+		$stmt->bindParam(':cod_prod', $this->cod_prod);
+		$stmt->bindParam(':desc', $this->desc);
+		$stmt->bindParam(':precio', $this->precio);
+		$stmt->bindParam(':stock', $this->stock);
+		$stmt->bindParam(':id_Cat', $this->id_Cat);
+		if($stmt->execute()) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
-	public function putData() {
+	public function putData(string $sql=null) {
+		$sql = "UPDATE $this->table SET nombre = :nombre,marca = :marca,codigo_producto= :cod_prod,descripcion = :desc,precio =:precio,stock = :stock,id_Category = :id_Cat WHERE id = :id";
 
-			$stmt = $this->conn->prepare('UPDATE students SET name = :name, address = :address, age = :age WHERE id = :id');
-
-			$stmt->bindParam(':name', $this->name);
-			$stmt->bindParam(':address', $this->address);
-			$stmt->bindParam(':age', $this->age);
-			$stmt->bindParam(':id', $this->id);
-
-			if($stmt->execute()) {
-					return TRUE;
-			}
-
-			return FALSE;
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':nombre', $this->nombre);
+		$stmt->bindParam(':marca', $this->marca);
+		$stmt->bindParam(':cod_prod', $this->cod_prod);
+		$stmt->bindParam(':desc', $this->desc);
+		$stmt->bindParam(':precio', $this->precio);
+		$stmt->bindParam(':stock', $this->stock);
+		$stmt->bindParam(':id_Cat', $this->id_Cat);
+		$stmt->bindParam(':id', $this->id);
+		if($stmt->execute()) {
+			return TRUE;
+		}
+		return FALSE;
 	}
 
-	public function delete() {
-
-			$stmt = $this->conn->prepare('DELETE FROM students WHERE id = :id');
-			$stmt->bindParam(':id', $this->id);
-
-			if($stmt->execute()) {
-					return TRUE;
-			}
-
-			return FALSE;
-	}
 }

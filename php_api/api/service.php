@@ -4,7 +4,6 @@
 	header('Access-Control-Allow-Methods: POST');
 
 	include_once '../config/Database.php';
-	include_once '../models/Student.php';
 	include_once '../models/Producto.php';
 
 
@@ -14,11 +13,8 @@
 	// dynamic modelS
 	$model = $_GET['model'];
 	switch ($model) {
-		case 'Student':
-			$model = new Student($db);
-			break;
 		case 'Producto':
-			$model = new Producto($db);
+			$model = new Producto($db,'productos');
 			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));
@@ -41,7 +37,6 @@
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data =(array) json_decode(file_get_contents("php://input"));
-
 			foreach(get_object_vars($model) as $k=>$v){
 				if ($k!="id"){
 					$model->$k = $data[$k];
@@ -75,7 +70,6 @@
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 			try {
 				$res = $model->fetchAll();
-				#$resCount = Count($res);
 				$models_ = array();
 				$data = json_decode(file_get_contents("php://input"));
 				if(isset($data->id)) {
