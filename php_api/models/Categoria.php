@@ -35,7 +35,6 @@ class Categoria extends BaseModel{
 	}
 
 	public function putData(string $sql=null) {
-		#:dir, :comuna, :region, :email, :cel
 		$sql = "UPDATE $this->table SET nombre = :nombre, sub_categoria = :subCat, sub_tipo_prod= :subProd WHERE $this->id_name = :id";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bindParam(':nombre', $this->nombre);
