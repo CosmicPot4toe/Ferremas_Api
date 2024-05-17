@@ -8,7 +8,7 @@ class Tienda extends BaseModel{
 	public $comuna;
 	public $region;
 	public $email;
-	public $cel;
+	public $telefono;
 
 	public function fetchOne() {
 		#get common stmt
