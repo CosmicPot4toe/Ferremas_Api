@@ -54,5 +54,22 @@ class BaseModel{
 	public function postData() {
 	}
 	public function putData() {
+		$query = "UPDATE $this->table SET ";
+		$res=$this->checkParams();
+		if(!empty($res)){
+			$query .= implode(', ',$res). " WHERE $this->id_name = :id";
+		}
+		// echo "$query\n";
+		// return TRUE;
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':id', $this->id);
+		if($stmt->execute()) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+	public function checkParams(){
+		$sql =array();
+		return $sql;
 	}
 }

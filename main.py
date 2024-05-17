@@ -43,7 +43,7 @@ class PhpApi:
 		res = requests.get(
 			url=self.url,
 			params={'model':self.model},
-			json={f'{self.id}':id}
+			json={f'{self.id_n}':id}
 		)
 		data = json.loads(res.text.encode("utf-8"))
 		pretty_json = json.dumps(data, indent=2)
@@ -73,7 +73,7 @@ class PhpApi:
 		res = requests.delete(
 			url=self.url,
 			params={'model':self.model},
-			json={f'{self.id}':id}
+			json={f'{self.id_n}':id}
 		)
 		data = json.loads(res.text.encode("utf-8"))
 		pretty_json = json.dumps(data, indent=2)
@@ -81,7 +81,8 @@ class PhpApi:
 
 
 url = 'http://localhost/php_api/api/service.php?'
-api = PhpApi("Categoria",url)
-dic={ "nombre":"Pedrito", "sub_categoria":"clavo", "sub_tipo_prod":"xd" }
+api = PhpApi("Producto",url)
+dic={ "id":1,"nombre":"Pedrito"}
 
-print(api.post(data=dic))
+print(api.put(data=dic))
+print(api.getOne(1))

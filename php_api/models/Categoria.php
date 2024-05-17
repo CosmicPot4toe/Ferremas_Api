@@ -34,16 +34,17 @@ class Categoria extends BaseModel{
 		return FALSE;
 	}
 
-	public function putData(string $sql=null) {
-		$sql = "UPDATE $this->table SET nombre = :nombre, sub_categoria = :subCat, sub_tipo_prod= :subProd WHERE $this->id_name = :id";
-		$stmt = $this->conn->prepare($sql);
-		$stmt->bindParam(':nombre', $this->nombre);
-		$stmt->bindParam(':subCat', $this->sub_categoria);
-		$stmt->bindParam(':subProd', $this->sub_tipo_prod);
-		$stmt->bindParam(':id', $this->id);
-		if($stmt->execute()) {
-			return TRUE;
+	public function checkParams(){
+		$sql=array();
+		if($this->nombre!=null){
+			$sql[]="nombre='$this->nombre'";
 		}
-		return FALSE;
+		if($this->sub_categoria!=null){
+			$sql[]="sub_categoria='$this->sub_categoria'";
+		}
+		if($this->sub_tipo_prod!=null){
+			$sql[]="sub_tipo_prod='$this->sub_tipo_prod'";
+		}
+		return $sql;
 	}
 }

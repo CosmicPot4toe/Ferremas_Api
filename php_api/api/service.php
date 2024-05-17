@@ -57,7 +57,7 @@
 		if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 			$data =(array) json_decode(file_get_contents("php://input"));
 			try {
-				foreach(get_object_vars($model) as $k=>$v){
+				foreach($data as $k=>$v){
 					$model->$k = $data[$k];
 				}
 				if(! is_null($model->id)) {

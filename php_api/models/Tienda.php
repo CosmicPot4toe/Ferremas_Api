@@ -42,21 +42,27 @@ class Tienda extends BaseModel{
 		}
 		return FALSE;
 	}
-
-	public function putData(string $sql=null) {
-		#:dir, :comuna, :region, :email, :cel
-		$sql = "UPDATE $this->table SET nombre = :nombre, direccion = :dir, comuna= :comuna, region = :region, email =:email, telefono = :cel WHERE $this->id_name = :id";
-		$stmt = $this->conn->prepare($sql);
-		$stmt->bindParam(':nombre', $this->nombre);
-		$stmt->bindParam(':direccion', $this->direccion);
-		$stmt->bindParam(':comuna', $this->comuna);
-		$stmt->bindParam(':region', $this->region);
-		$stmt->bindParam(':email', $this->email);
-		$stmt->bindParam(':telefono', $this->telefono);
-		$stmt->bindParam(':id', $this->id);
-		if($stmt->execute()) {
-			return TRUE;
+	public function checkParams(){
+		$sql=array();
+		if($this->nombre!=null){
+			$sql[]="nombre='$this->nombre'";
 		}
-		return FALSE;
+		if($this->direccion!=null){
+			$sql[]="direccion='$this->direccion'";
+		}
+		if($this->comuna!=null){
+			$sql[]="comuna='$this->comuna'";
+		}
+		if($this->region!=null){
+			$sql[]="region='$this->region'";
+		}
+		if($this->email!=null){
+			$sql[]="email='$this->email'";
+		}
+		if($this->telefono!=null){
+			$sql[]="telefono=$this->telefono";
+		}
+		return $sql;
 	}
+
 }

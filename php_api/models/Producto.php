@@ -46,23 +46,30 @@ class Producto extends BaseModel{
 		}
 		return FALSE;
 	}
-
-	public function putData(string $sql=null) {
-		$sql = "UPDATE $this->table SET nombre = :nombre,marca = :marca,codigo_producto= :cod_prod,descripcion = :desc,precio =:precio,stock = :stock,id_C = :id_Cat WHERE id = :id";
-
-		$stmt = $this->conn->prepare($sql);
-		$stmt->bindParam(':nombre', $this->nombre);
-		$stmt->bindParam(':marca', $this->marca);
-		$stmt->bindParam(':cod_prod', $this->codigo_producto);
-		$stmt->bindParam(':desc', $this->descripcion);
-		$stmt->bindParam(':precio', $this->precio);
-		$stmt->bindParam(':stock', $this->stock);
-		$stmt->bindParam(':id_Cat', $this->id_C);
-		$stmt->bindParam(':id', $this->id);
-		if($stmt->execute()) {
-			return TRUE;
+	public function checkParams(){
+		$sql= array();
+		if($this->nombre!=null){
+			$sql[] ="nombre='$this->nombre'";
 		}
-		return FALSE;
+		if($this->marca!=null){
+			$sql[] ="marca='$this->marca'";
+		}
+		if($this->codigo_producto!=null){
+			$sql[] ="codigo_producto='$this->codigo_producto'";
+		}
+		if($this->descripcion!=null){
+			$sql[] ="descripcion='$this->descripcion'";
+		}
+		if($this->precio!=null){
+			$sql[] ="precio=$this->precio";
+		}
+		if($this->precio!=null){
+			$sql[] ="stock=$this->stock";
+		}
+		if($this->id_C!=null){
+			$sql[] ="id_C=$this->id_C";
+		}
+		return $sql;
 	}
-
+	
 }
