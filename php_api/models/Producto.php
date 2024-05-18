@@ -3,14 +3,13 @@
 include_once '../models/base_model.php';
 
 class Producto extends BaseModel{
-	#nombre, marca, codigo_producto,descripcion,precio,stock,id_Category
-	public $nombre;
-	public $marca;
-	public $codigo_producto;
-	public $descripcion;
-	public $precio;
-	public $stock;
-	public $id_C;
+	#nombre, marca, codigo_producto,descripcion,precio,stock,categoriaategory
+	public string $nombre;
+	public string $marca;
+	public string $codigo_producto;
+	public string $descripcion;
+	public int $precio;
+	public int $categoria;
 
 	public function fetchOne() {
 		#get common stmt
@@ -24,23 +23,21 @@ class Producto extends BaseModel{
 			$this->codigo_producto = $row['codigo_producto'];
 			$this->descripcion = $row['descripcion'];
 			$this->precio = $row['precio'];
-			$this->stock = $row['stock'];
-			$this->id_C = $row['id_C'];
+			$this->categoria = $row['categoria'];
 			return TRUE;
 		}
 		return FALSE;
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,stock,id_C) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :stock, :id_Cat)";
+		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,categoria) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :categoria)";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bindParam(':nombre', $this->nombre);
 		$stmt->bindParam(':marca', $this->marca);
 		$stmt->bindParam(':cod_prod', $this->codigo_producto);
 		$stmt->bindParam(':desc', $this->descripcion);
 		$stmt->bindParam(':precio', $this->precio);
-		$stmt->bindParam(':stock', $this->stock);
-		$stmt->bindParam(':id_Cat', $this->id_C);
+		$stmt->bindParam(':categoria', $this->categoria);
 		if($stmt->execute()) {
 			return TRUE;
 		}
@@ -63,11 +60,8 @@ class Producto extends BaseModel{
 		if($this->precio!=null){
 			$sql[] ="precio=$this->precio";
 		}
-		if($this->precio!=null){
-			$sql[] ="stock=$this->stock";
-		}
-		if($this->id_C!=null){
-			$sql[] ="id_C=$this->id_C";
+		if($this->categoria!=null){
+			$sql[] ="categoria=$this->categoria";
 		}
 		return $sql;
 	}

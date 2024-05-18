@@ -6,7 +6,9 @@
 	include_once '../config/Database.php';
 	include_once '../models/Producto.php';
 	include_once '../models/Tienda.php';
+	include_once '../models/CategoriaP.php';
 	include_once '../models/Categoria.php';
+	include_once '../models/Stock.php';
 
 	$db = new Database();
 	$db = $db->connect();
@@ -19,8 +21,14 @@
 		case 'Tienda':
 			$model = new Tienda($db,'tiendas');
 			break;
+		case 'CategoriaP':
+			$model = new CategoriaP($db,'categoriaProducto');
+			break;
 		case 'Categoria':
-			$model = new Categoria($db,'categorias',"id_C");
+			$model = new Categoria($db,'categoria');
+			break;
+		case 'Stock':
+			$model = new Categoria($db,'stock');
 			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));
@@ -29,8 +37,8 @@
 	
 	try {
 		if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-			$data =(array) json_decode(file_get_contents("php://input"));
-			$model->id = isset($data[$model->IdName()]) ? $data[$model->IdName()] : NULL;
+			$data = json_decode(file_get_contents("php://input"));
+			$model->id = isset($data->id) ? $data->id : NULL;
 			if(! is_null($model->id)) {
 				if($model->delete()) {
 				echo json_encode(array('message' => "$model deleted"));
@@ -44,7 +52,7 @@
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data =(array) json_decode(file_get_contents("php://input"));
 			foreach(get_object_vars($model) as $k=>$v){
-				if ($k!=$model->$id_name){
+				if ($k!='id'){
 					$model->$k = $data[$k];
 				}
 			}
@@ -77,9 +85,9 @@
 			try {
 				$res = $model->fetchAll();
 				$models_ = array();
-				$data =(array) json_decode(file_get_contents("php://input"));
-				if(isset($data[$model->IdName()])) {
-					$model->id = $data[$model->IdName()];
+				$data = json_decode(file_get_contents("php://input"));
+				if(isset($data->id)) {
+					$model->id = $data->id;
 					if($model->fetchOne()) {
 						foreach ($model as $k => $v) {
 							$models_[$k]=$v;
