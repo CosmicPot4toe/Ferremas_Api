@@ -10,6 +10,7 @@ class Producto extends BaseModel{
 	public string $descripcion;
 	public int $precio;
 	public int $categoria;
+	public string $imagen_url;
 
 	public function fetchOne() {
 		#get common stmt
@@ -24,13 +25,14 @@ class Producto extends BaseModel{
 			$this->descripcion = $row['descripcion'];
 			$this->precio = $row['precio'];
 			$this->categoria = $row['categoria'];
+			$this->imagen_url = $row['imagen_url'];
 			return TRUE;
 		}
 		return FALSE;
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,categoria) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :categoria)";
+		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,categoria,imagen_url) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :categoria,:imagen_url)";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bindParam(':nombre', $this->nombre);
 		$stmt->bindParam(':marca', $this->marca);
@@ -38,6 +40,7 @@ class Producto extends BaseModel{
 		$stmt->bindParam(':desc', $this->descripcion);
 		$stmt->bindParam(':precio', $this->precio);
 		$stmt->bindParam(':categoria', $this->categoria);
+		$stmt->bindParam(':imagen_url', $this->imagen_url);
 		if($stmt->execute()) {
 			return TRUE;
 		}
@@ -62,6 +65,9 @@ class Producto extends BaseModel{
 		}
 		if($this->categoria!=null){
 			$sql[] ="categoria=$this->categoria";
+		}
+		if($this->imagen_url!=null){
+			$sql[] ="imagen_url=$this->imagen_url";
 		}
 		return $sql;
 	}
