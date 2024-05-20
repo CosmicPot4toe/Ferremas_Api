@@ -21,7 +21,7 @@
 		case 'Tienda':
 			$model = new Tienda($db,'tiendas');
 			break;
-		case 'CategoriaP':
+		case 'CategoriaProducto':
 			$model = new CategoriaP($db,'categoriaProducto');
 			break;
 		case 'Categoria':
