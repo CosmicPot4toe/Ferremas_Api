@@ -28,7 +28,7 @@
 			$model = new Categoria($db,'categoria');
 			break;
 		case 'Stock':
-			$model = new Categoria($db,'stock');
+			$model = new Stock($db,'stock');
 			break;
 		default:
 			echo json_encode(array('message' => "$model doesn't exist!"));
