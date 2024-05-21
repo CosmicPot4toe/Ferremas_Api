@@ -25,10 +25,9 @@ class Mindicador:
 				return data
 
 class PhpApi:
-	def __init__(self,modelo:str,url:str,id_n:str='id'):
+	url = 'http://localhost/php_api/api/service.php?'
+	def __init__(self,modelo:str):
 		self.model = modelo
-		self.url = url
-		self.id_n = id_n
 
 	def getAll(self):
 		res = requests.get(
@@ -43,7 +42,7 @@ class PhpApi:
 		res = requests.get(
 			url=self.url,
 			params={'model':self.model},
-			json={f'{self.id_n}':id}
+			json={'id':id}
 		)
 		data = json.loads(res.text.encode("utf-8"))
 		pretty_json = json.dumps(data, indent=2)
@@ -67,22 +66,22 @@ class PhpApi:
 		)
 		data = json.loads(res.text.encode("utf-8"))
 		pretty_json = json.dumps(data, indent=2)
-		return pretty_json
+		return data
 
 	def Del(self,id:int):
 		res = requests.delete(
 			url=self.url,
 			params={'model':self.model},
-			json={f'{self.id_n}':id}
+			json={'id':id}
 		)
 		data = json.loads(res.text.encode("utf-8"))
 		pretty_json = json.dumps(data, indent=2)
 		return pretty_json
 
 
-url = 'http://localhost/php_api/api/service.php?'
-api = PhpApi("Producto",url)
-dic={ "id":1,"nombre":"Pedrito"}
+
+api = PhpApi("Producto")
+dic={"id": 4, "imagen_url": "xd"}
 
 print(api.put(data=dic))
-print(api.getOne(1))
+#print(api.getOne(1))

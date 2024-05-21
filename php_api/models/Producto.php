@@ -67,7 +67,7 @@ class Producto extends BaseModel{
 			$sql[] ="categoria=$this->categoria";
 		}
 		if($this->imagen_url!=null){
-			$sql[] ="imagen_url=$this->imagen_url";
+			$sql[] ="imagen_url='$this->imagen_url'";
 		}
 		return $sql;
 	}
