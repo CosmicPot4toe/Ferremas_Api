@@ -34,7 +34,6 @@
 			echo json_encode(array('message' => "$model doesn't exist!"));
 			exit;
 	}
-	
 	try {
 		if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 			$data = json_decode(file_get_contents("php://input"));
@@ -64,56 +63,46 @@
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 			$data =(array) json_decode(file_get_contents("php://input"));
-			try {
-				foreach($data as $k=>$v){
-					$model->$k = $data[$k];
-				}
-				if(! is_null($model->id)) {
-					if($model->putData()) {
-					echo json_encode(array('message' => "$model updated"));
-					} else {
-					echo json_encode(array('message' => "$model Not updated, try again!"));
-					}
+			foreach($data as $k=>$v){
+				$model->$k = $data[$k];
+			}
+			if(! is_null($model->id)) {
+				if($model->putData()) {
+				echo json_encode(array('message' => "$model updated"));
 				} else {
-				echo json_encode(array('message' => "Error: $model ID is missing!"));
+				echo json_encode(array('message' => "$model Not updated, try again!"));
 				}
-			} catch (\Throwable $th) {
-				echo $th;
+			} else {
+			echo json_encode(array('message' => "Error: $model ID is missing!"));
 			}
 		}
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-			try {
-				$res = $model->fetchAll();
-				$models_ = array();
-				$data = json_decode(file_get_contents("php://input"));
-				if(isset($data->id)) {
-					$model->id = $data->id;
-					if($model->fetchOne()) {
-						foreach ($model as $k => $v) {
-							$models_[$k]=$v;
-						}
-						print_r(json_encode($models_));
-					} else {
-						echo json_encode(array('message' => "No records found!"));
+			$res = $model->fetchAll();
+			$models_ = array();
+			$data = json_decode(file_get_contents("php://input"));
+			if(isset($data->id)) {
+				$model->id = $data->id;
+				if($model->fetchOne()) {
+					foreach ($model as $k => $v) {
+						$models_[$k]=$v;
 					}
-				} elseif($res[1] > 0) {
-					$models = array();
-					while($row = $res[0]->fetch(PDO::FETCH_ASSOC)) {
-						foreach($row as $k => $v){
-							$models_[$k]=$v;
-						}
-						array_push($models, $models_);
-					}
-					echo json_encode($models);
+					print_r(json_encode($models_));
 				} else {
 					echo json_encode(array('message' => "No records found!"));
 				}
-			}catch (Throwable $th) {
-				//throw $th;
-				echo $th;
+			} elseif($res[1] > 0) {
+				$models = array();
+				while($row = $res[0]->fetch(PDO::FETCH_ASSOC)) {
+					foreach($row as $k => $v){
+						$models_[$k]=$v;
+					}
+					array_push($models, $models_);
+				}
+				echo json_encode($models);
+			} else {
+				echo json_encode(array('message' => "No records found!"));
 			}
 		} 
 	} catch (\Throwable $th) {
-		//throw $th;
 		echo $th;
 	}

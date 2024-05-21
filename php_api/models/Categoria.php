@@ -3,7 +3,7 @@
 include_once '../models/base_model.php';
 class Categoria extends BaseModel{
 	#nombre, sub_categoria, sub_tipo_prod
-	public string $nombre;
+	public $nombre;
 
 	public function fetchOne() {
 		#get common stmt

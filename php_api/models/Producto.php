@@ -4,13 +4,13 @@ include_once '../models/base_model.php';
 
 class Producto extends BaseModel{
 	#nombre, marca, codigo_producto,descripcion,precio,stock,categoriaategory
-	public string $nombre;
-	public string $marca;
-	public string $codigo_producto;
-	public string $descripcion;
-	public int $precio;
-	public int $categoria;
-	public string $imagen_url;
+	public $nombre;
+	public $marca;
+	public $codigo_producto;
+	public $descripcion;
+	public $precio;
+	public $categoria;
+	public $imagen_url;
 
 	public function fetchOne() {
 		#get common stmt

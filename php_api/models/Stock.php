@@ -3,9 +3,9 @@
 include_once '../models/base_model.php';
 class Stock extends BaseModel{
 	#nombre, sub_categoria, sub_tipo_prod
-	public int $cantidad;
-	public int $sucursal;
-	public int $producto;
+	public $cantidad;
+	public $sucursal;
+	public $producto;
 
 	public function fetchOne() {
 		#get common stmt
