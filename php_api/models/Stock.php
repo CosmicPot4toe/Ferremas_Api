@@ -23,8 +23,9 @@ class Stock extends BaseModel{
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (cantidad,sucursal,producto) VALUES (:cantidad,:sucursal,:producto)";
+		$sql = "INSERT INTO $this->table (id,cantidad,sucursal,producto) VALUES (:id,:cantidad,:sucursal,:producto)";
 		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':cantidad', $this->cantidad);
 		$stmt->bindParam(':sucursal', $this->sucursal);
 		$stmt->bindParam(':producto', $this->producto);

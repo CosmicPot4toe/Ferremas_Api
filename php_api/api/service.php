@@ -51,9 +51,7 @@
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$data =(array) json_decode(file_get_contents("php://input"));
 			foreach(get_object_vars($model) as $k=>$v){
-				if ($k!='id'){
-					$model->$k = $data[$k];
-				}
+				$model->$k = $data[$k];
 			}
 			if($model->postData()) {
 				echo json_encode(array('message' => "$model added"));

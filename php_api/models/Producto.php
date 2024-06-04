@@ -32,8 +32,9 @@ class Producto extends BaseModel{
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre, marca, codigo_producto,descripcion,precio,categoria,imagen_url) VALUES (:nombre, :marca, :cod_prod, :desc, :precio, :categoria,:imagen_url)";
+		$sql = "INSERT INTO $this->table (id,nombre, marca, codigo_producto,descripcion,precio,categoria,imagen_url) VALUES (:id,:nombre, :marca, :cod_prod, :desc, :precio, :categoria,:imagen_url)";
 		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':nombre', $this->nombre);
 		$stmt->bindParam(':marca', $this->marca);
 		$stmt->bindParam(':cod_prod', $this->codigo_producto);

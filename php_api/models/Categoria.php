@@ -19,8 +19,9 @@ class Categoria extends BaseModel{
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+		$sql = "INSERT INTO $this->table (id, nombre) VALUES (:id,:nombre)";
 		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':nombre', $this->nombre);
 		if($stmt->execute()) {
 			return TRUE;

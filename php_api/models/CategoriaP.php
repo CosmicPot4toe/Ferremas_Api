@@ -25,8 +25,9 @@ class CategoriaP extends BaseModel{
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre, subcategoria, sub_tipo_prod,id_cat) VALUES (:nombre, :subCat, :subProd,:id_cat)";
+		$sql = "INSERT INTO $this->table (id,nombre, subcategoria, sub_tipo_prod,id_cat) VALUES (:id, :nombre, :subCat, :subProd,:id_cat)";
 		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':nombre', $this->nombre_categoria);
 		$stmt->bindParam(':subCat', $this->subcategoria);
 		$stmt->bindParam(':subProd', $this->sub_tipo_producto);

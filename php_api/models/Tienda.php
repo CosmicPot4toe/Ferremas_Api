@@ -29,8 +29,9 @@ class Tienda extends BaseModel{
 	}
 
 	public function postData() {
-		$sql = "INSERT INTO $this->table (nombre, direccion, comuna,region,email,telefono) VALUES (:nombre, :direccion, :comuna, :region, :email, :cel)";
+		$sql = "INSERT INTO $this->table (id,nombre, direccion, comuna,region,email,telefono) VALUES (:id,:nombre, :direccion, :comuna, :region, :email, :cel)";
 		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $this->id);
 		$stmt->bindParam(':nombre', $this->nombre);
 		$stmt->bindParam(':direccion', $this->direccion);
 		$stmt->bindParam(':comuna', $this->comuna);
