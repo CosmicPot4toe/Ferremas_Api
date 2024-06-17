@@ -9,7 +9,7 @@ class Producto extends BaseModel{
 	public $codigo_producto;
 	public $descripcion;
 	public $precio;
-	public $categoria;
+	public $categoria_id;
 	public $imagen_url;
 
 	public function fetchOne() {
@@ -24,7 +24,7 @@ class Producto extends BaseModel{
 			$this->codigo_producto = $row['codigo_producto'];
 			$this->descripcion = $row['descripcion'];
 			$this->precio = $row['precio'];
-			$this->categoria = $row['categoria'];
+			$this->categoria_id = $row['categoria_id'];
 			$this->imagen_url = $row['imagen_url'];
 			return TRUE;
 		}
@@ -40,7 +40,7 @@ class Producto extends BaseModel{
 		$stmt->bindParam(':cod_prod', $this->codigo_producto);
 		$stmt->bindParam(':desc', $this->descripcion);
 		$stmt->bindParam(':precio', $this->precio);
-		$stmt->bindParam(':categoria', $this->categoria);
+		$stmt->bindParam(':categoria', $this->categoria_id);
 		$stmt->bindParam(':imagen_url', $this->imagen_url);
 		if($stmt->execute()) {
 			return TRUE;
@@ -64,8 +64,8 @@ class Producto extends BaseModel{
 		if($this->precio!=null){
 			$sql[] ="precio=$this->precio";
 		}
-		if($this->categoria!=null){
-			$sql[] ="categoria=$this->categoria";
+		if($this->categoria_id!=null){
+			$sql[] ="categoria=$this->categoria_id";
 		}
 		if($this->imagen_url!=null){
 			$sql[] ="imagen_url='$this->imagen_url'";

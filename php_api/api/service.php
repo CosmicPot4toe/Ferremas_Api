@@ -84,7 +84,7 @@
 					foreach ($model as $k => $v) {
 						$models_[$k]=$v;
 					}
-					print_r(json_encode($models_));
+					//print_r(json_encode($models_));
 				} else {
 					echo json_encode(array('message' => "No records found!"));
 				}
